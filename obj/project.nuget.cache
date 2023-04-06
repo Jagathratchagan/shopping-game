@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "1EgrV4n9zQt6l+86zA9trG8mbyz9cBtMUIzpX+/9w2qGN2a1sVGtHE2MTUaJYyKmmZdyIxR/q+xMr0VmMcBVdA==",
+  "success": true,
+  "projectFilePath": "C:\\MyData\\Jagath\\Projects\\shopping-game\\shopping-game.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\J4941701\\.nuget\\packages\\system.configuration.configurationmanager\\7.0.0\\system.configuration.configurationmanager.7.0.0.nupkg.sha512",
+    "C:\\Users\\J4941701\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "C:\\Users\\J4941701\\.nuget\\packages\\system.security.cryptography.protecteddata\\7.0.0\\system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
+    "C:\\Users\\J4941701\\.nuget\\packages\\system.security.permissions\\7.0.0\\system.security.permissions.7.0.0.nupkg.sha512",
+    "C:\\Users\\J4941701\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
+    "C:\\Users\\J4941701\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.18\\microsoft.netcore.app.host.win-x64.3.1.18.nupkg.sha512"
+  ],
+  "logs": []
+}
