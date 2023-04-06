@@ -3,28 +3,28 @@ using System.Collections.Generic;
 
 namespace shopping_game
 {
-    class Program
+    class Program  
     {
         private static bool authflag = false;
-        private static Catalogue catalogue = Catalogue.getInstance();
-        private static Cart cart = Cart.getInstance();
+        private static List<IPricingRule> pricingRules = new List<IPricingRule>();
+        private static Checkout checkout = Checkout.getInstance();
 
         static void Main(string[] args)
         {
             Console.WriteLine("####################################");
             Console.WriteLine("           Authentication          ");
-            Console.WriteLine("####################################");            
+            Console.WriteLine("####################################");
             Console.WriteLine();
             Console.WriteLine("Plesae enter you credentials :");
             Console.WriteLine("------------------------------");
 
             #region Authentication            
             do
-            {                
-                Authenticate();                
-            }while (authflag==false);
+            {
+                Authenticate();
+            } while (authflag == false);
             #endregion
-
+             
             if (authflag)
             {
                 Header();
@@ -37,7 +37,7 @@ namespace shopping_game
                     bool ordercompletion = false;
                     #region Order Transaction
                     do
-                    {                        
+                    {
                         Console.Write("Enter Product Id (e.g. ipd, mbp, atv, vga): > ");
                         string productid = Console.ReadLine();
 
@@ -50,25 +50,22 @@ namespace shopping_game
                             string itemconfirmation = Console.ReadLine();
 
                             // Add product in Cart
-                           if(itemconfirmation.ToUpper().Equals("YES"))
-                           {
-                                // Product object to Get Master Data
-                                List<Product> products = products = catalogue.GetProducts();
-                                var product = products.Find(p => p.SKU == productid);
-
-                                // Create Item Object
-                                CartItem item = new CartItem();
-                                item.SKU = productid;
-                                item.Name = product.Name;
-                                item.Price = product.Price;
-                                item.Currency = product.Currency;
-                                item.Quantity = quantity;
-                                item.OfferFlag = "";
-                                item.FinalPrice = 0.00;
-                                // Update in Cart
-                                cart.UpdateCart(item);
-
+                            if (itemconfirmation.ToUpper().Equals("YES"))
+                            {
+                                // Scan Barcode          
+                                checkout.Scan(productid, Convert.ToDecimal(quantity));
+                                
                                 Console.Write("Item successfully added to Cart!");
+                                Console.WriteLine();
+                                 
+                            }
+                            else if (itemconfirmation.ToUpper().Equals("NO"))
+                            {
+
+                            }
+                            else
+                            {
+                                Console.Write("Invalid command.");
                                 Console.WriteLine();
                             }
 
@@ -82,7 +79,7 @@ namespace shopping_game
                             if (addmoreitemconfirmation.ToUpper().Equals("NO"))
                             {
                                 ordercompletion = true;
-                            }                            
+                            }
                         }
                         else
                         {
@@ -100,11 +97,11 @@ namespace shopping_game
                 }
                 else if (input.Equals("2"))
                 {
-                    Console.WriteLine("Option 2");
+                    Console.WriteLine("Under construction");
                 }
                 else if (input.Equals("3"))
                 {
-                    Console.WriteLine("Option 3");
+                    Console.WriteLine("Under construction");
                 }
                 else
                 {
@@ -136,9 +133,9 @@ namespace shopping_game
 
         private static void ShowProductCatelouge()
         {
-            // Load Product Catalogue            
+            // Load Product Catalogue                        
             List<Product> products = new List<Product>();
-            products = catalogue.GetProducts();
+            products = Catalog.ViewProducts();
 
             Console.WriteLine("Product Catalogue :");
             Console.WriteLine("-------------------------------------------------");
@@ -146,8 +143,8 @@ namespace shopping_game
             Console.WriteLine("-------------------------------------------------");
 
             foreach (var item in products)
-            {
-                Console.WriteLine("| " + item.SKU + "\t| " + item.Name + "\t\t| " + item.Currency + " " + item.Price.ToString("0.00") + "\t|");
+            {                
+                Console.WriteLine("| " + item.ProductID + "\t| " + item.ProductName + "\t\t| " + item.Price.ToString("0.00") + "\t|");
             }
 
             Console.WriteLine("-------------------------------------------------");
@@ -157,27 +154,26 @@ namespace shopping_game
         private static void ShowCartItems()
         {
             // Load Product Catalogue            
-            List<CartItem> cartitems = new List<CartItem>();
-            cartitems = cart.ViewCart();
+            List<CartItem> cartitems = new List<CartItem>();            
+            cartitems = checkout.ViewCartItems();
 
             Console.WriteLine("Cart Items :");
-            Console.WriteLine("-----------------------------------------------------------------------------------------");
-            Console.WriteLine("| SKU " + "\t| Product Name" + "\t| Quantity" + "\t| Actual Price" + "\t| Offer Flag" + "\t| Final Price" + "\t|");
-            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------------------------");
+            Console.WriteLine("| SKU " + "\t| Product Name" + "\t| Quantity" + "\t| Actual Price" + "\t| Discount Price" + "|");
+            Console.WriteLine("---------------------------------------------------------------------------");
 
             foreach (var item in cartitems)
             {
-                Console.WriteLine("| " + item.SKU + "\t| " + item.Name + "\t| " + item.Quantity + "\t\t| " + item.Currency + " " + item.Price.ToString("0.00") + "\t| " + item.OfferFlag + "\t\t| " + item.FinalPrice.ToString("0.00") + "\t\t|");
+                Console.WriteLine("| " + item.ProducID + "\t| " + item.ProductName + "\t| " + item.Quantity + "\t\t| " + item.Currency + " " + item.Price.ToString("0.00") + "\t| " + checkout.Total(item).ToString("0.00") + "\t|");
             }
 
-            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------------------------");
             Console.WriteLine();
         }
 
         private static bool Authenticate()
         {            
             Login login = new Login();            
-            // User ID : admin  |  Password : admin  
             Console.Write("Enter User Id: ");
             string userid = Console.ReadLine();
             Console.Write("Enter Password: ");            
@@ -185,21 +181,6 @@ namespace shopping_game
             authflag = login.Authentication(userid, passwrord);
             return authflag;
         }
-
-
-        
-        static void Operation(string input)
-        {
-            // Show Catalogue
-
-
-            // Get Product Price
-
-
-
-        } 
-
-
-
+         
     }
 }

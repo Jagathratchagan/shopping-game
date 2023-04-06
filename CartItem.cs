@@ -4,36 +4,35 @@ using System.Text;
 
 namespace shopping_game
 {
-    class CartItem
+    public class CartItem
     {
 
         // Properties
-        private string sku;
-        private string name;
-        private double price;
+        private string producid;
+        private string productname;
+        private decimal price;
         private string currency;
-        private string quantity;
-        private string offerflag;
-        private double finalprice;
+        private decimal quantity;        
+        private decimal finalprice;
 
         public CartItem()
         {
 
         }
 
-        public string SKU
+        public string ProducID
         {
-            get { return sku; }
-            set { sku = value; }
+            get { return producid; }
+            set { producid = value; }
         }
 
-        public string Name
+        public string ProductName
         {
-            get { return name; }
-            set { name = value; }
+            get { return productname; }
+            set { productname = value; }
         }
 
-        public double Price
+        public decimal Price
         {
             get { return price; }
             set { price = value; }
@@ -45,19 +44,13 @@ namespace shopping_game
             set { currency = value; }
         }
 
-        public string Quantity
+        public decimal Quantity
         {
             get { return quantity; }
             set { quantity = value; }
         }
 
-        public string OfferFlag
-        {
-            get { return offerflag; }
-            set { offerflag = value; }
-        }
-
-        public double FinalPrice
+        public decimal FinalPrice
         {
             get { return finalprice; }
             set { finalprice = value; }
